@@ -1,4 +1,3 @@
-// routes/routes.go
 package routes
 
 import (
@@ -11,26 +10,20 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// SetupRoutes configura as rotas no servidor Gin
 func SetupRoutes(r *gin.Engine) {
-	// Define uma rota que aceita a query "q"
-	r.GET("/", func(c *gin.Context) {
-		// Obtém o valor da query "q" a partir da URL
+	r.GET("/search", func(c *gin.Context) {
+
 		query := c.Query("q")
 
-		// Verifica se a query está presente
 		if query == "" {
-			c.JSON(400, gin.H{"error": "A query 'q' é obrigatória"})
+			c.JSON(400, gin.H{"error": "Null or invalid query"})
 			return
 		}
 
 		// Caminho para a pasta "Leaks"
 		dirPath := "leaks"
 
-		// Slice para armazenar os resultados da busca
 		var results []gin.H
-
-		// Lista os arquivos na pasta
 		err := filepath.Walk(dirPath, func(path string, info os.FileInfo, err error) error {
 			if err != nil {
 				fmt.Println(err)
@@ -51,6 +44,7 @@ func SetupRoutes(r *gin.Engine) {
 
 				// Encontrar a posição da query nas linhas
 				var start, end int
+				found := false
 				for i, line := range lines {
 					if strings.Contains(line, query) {
 						// Define o início como 30 linhas antes da ocorrência
@@ -58,22 +52,24 @@ func SetupRoutes(r *gin.Engine) {
 						if start < 0 {
 							start = 0
 						}
-
-						// Define o final como 30 linhas após a ocorrência
+						// E o final 30 linhas apos
 						end = i + 30
 						if end > len(lines) {
 							end = len(lines)
 						}
+						found = true
 						break
 					}
 				}
 
-				// Adiciona o resultado à lista
-				results = append(results, gin.H{
-					"path":     path,
-					"content":  strings.Join(lines[start:end], "\n"),
-					"position": fmt.Sprintf("Linha %d", start+1), // Adiciona 1 para a linha de início ser 1-indexed
-				})
+				// Adiciona o resultado à lista apenas se algo foi encontrado
+				if found {
+					results = append(results, gin.H{
+						"path":     path,
+						"content":  strings.Join(lines[start:end], "\n"),
+						"position": fmt.Sprintf("Line %d", start+1), // Adiciona 1 para a linha de início ser 1-indexed
+					})
+				}
 			}
 
 			return nil

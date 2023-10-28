@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <h1>Your Search Results</h1>
+
+    <div class="search-container">
+        <label for="search-input">Search:</label>
+        <input type="text" id="search-input" />
+        <button id="search-button">Search</button>
+    </div>
+
+    <div id="results-container"></div>
+</div>
+
+<script>
+    function displayResults(results) {
+        var resultsContainer = $('#results-container');
+
+        resultsContainer.empty();
+
+        if (results.length === 0) {
+            resultsContainer.append('<p class="no-results">No results found.</p>');
+            return;
+        }
+
+        results.forEach(function(result) {
+            var resultElement = $('<div class="result"></div>');
+            resultElement.append('<p><strong>File:</strong> ' + result.path + '</p>');
+            resultElement.append('<p><strong>Position:</strong> ' + result.position + '</p>');
+            resultElement.append('<pre><code>' + result.content + '</code></pre>');
+            resultsContainer.append(resultElement);
+        });
+    }
+    function performSearch(query) {
+        $.get('/search?q=' + query, function(data) {
+            displayResults(data.results);
+        });
+    }
+    $(document).ready(function() {
+        var queryParam = new URLSearchParams(window.location.search).get('q');
+        
+        $('#search-input').val(queryParam);
+        performSearch(queryParam);
+        $('#search-button').on('click', function() {
+            var query = $('#search-input').val();
+            performSearch(query);
+        });
+    });
+</script>
+
+</body>
+</html>
