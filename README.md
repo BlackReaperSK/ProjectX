@@ -1,21 +1,20 @@
-# ProjectX: Learn how to make your own IntelX
+# ProjectX: Your on Data Leak Repository
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 ## Overview
 
-ProjectX is an educational repository that aims to teach developers how to prevent credential leaks and create their own IntelX (Intelligence/Exploitation tool). This project emphasizes the importance of security and responsible programming practices to protect sensitive information. Depending on your region, it may be illegal to access this type of data. In the USA, it's not illegal to access leaked data. Consider learning about your country's jurisdiction before embarking on this project. 
+ProjectX is an educational repository that aims to teach developers how to prevent credential leaks and create their own XKeyscore (Intelligence/Exploitation tool). This project emphasizes the importance of security and responsible programming practices to protect sensitive information. Depending on your region, it may be illegal to access this type of data. In the USA, it's not illegal to access leaked data. Consider learning about your country's jurisdiction before embarking on this project. 
 
 
 ## Table of Contents
 
-- [Overview](#overview)
-- [Features](#features)
-- [Getting Started](#getting-started)
-- [Usage](#usage)
-- [Security Considerations](#security-considerations)
-- [Contributing](#contributing)
-- [License](#license)
+- [ProjectX: Your on Data Leak Repository](#projectx-your-on-data-leak-repository)
+  - [Overview](#overview)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+  - [Getting Started](#getting-started)
+  - [Usage](#usage)
 
 ## Features
 
