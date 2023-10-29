@@ -12,10 +12,11 @@ import (
 func main() {
 	gin.SetMode(gin.ReleaseMode)
 	r := gin.New()
+
 	// ROTAS
 	r.StaticFS("/portal", http.Dir("internal/static"))
-	// Configura as rotas usando o pacote routes
-	routes.SetupRoutes(r)
+	routes.SetupSearch(r)
+	routes.SetupExport(r)
 
 	// Power on GIN server
 	serverAddr := "127.0.0.1:8080"

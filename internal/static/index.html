@@ -1,3 +1,5 @@
+<!-- internal/static/index.html -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,55 +7,82 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Results</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css"> 
+    <link href="https://fonts.cdnfonts.com/css/mad-hacker" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <style>
+        body {
+            font-family: 'MAD hacker', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000000; /* Corrigido para preto */
+            color: #ffffff; /* Corrigido para branco */
+        }
+    </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Your Search Results</h1>
+    <h1 style="color: #ff0000;">Build Your Own Data - ProjectX</h1>
 
+    <!-- Adiciona uma barra de pesquisa -->
     <div class="search-container">
-        <label for="search-input">Search:</label>
-        <input type="text" id="search-input" />
-        <button id="search-button">Search</button>
+        <label for="search-input" style="color: #ffffff;">Query:</label>
+        <input type="text" id="search-input" style="background-color: #333333; color: #ffffff;" />
+        <label for="limit-input" style="color: #ffffff;">Limit:</label>
+        <input type="text" id="limit-input" placeholder="Enter limit" style="background-color: #333333; color: #ffffff;" />
+        <button id="search-button" style="background-color: #ff0000; color: #ffffff;">Search</button>
     </div>
 
     <div id="results-container"></div>
 </div>
 
 <script>
-    function displayResults(results) {
+    function displayResults(results, query) {
         var resultsContainer = $('#results-container');
 
         resultsContainer.empty();
 
         if (results.length === 0) {
-            resultsContainer.append('<p class="no-results">No results found.</p>');
+            resultsContainer.append('<p class="no-results" style="color: #999999;">No results Found.</p>');
             return;
         }
 
         results.forEach(function(result) {
-            var resultElement = $('<div class="result"></div>');
-            resultElement.append('<p><strong>File:</strong> ' + result.path + '</p>');
-            resultElement.append('<p><strong>Position:</strong> ' + result.position + '</p>');
-            resultElement.append('<pre><code>' + result.content + '</code></pre>');
+            var resultElement = $('<div class="result" style="border: 1px solid #ff0000;"></div>');
+            resultElement.append('<p><strong style="color: #ffffff;">File:</strong> ' + (result.path) + '</p>');
+            resultElement.append('<p><strong style="color: #ffffff;">Position:</strong> ' + (result.position) + '</p>');
+            var highlightedContent = result.content.replace(new RegExp(query, 'gi'), function (match) {
+                return '<mark style="background-color: #ff0000; color: #ffffff;">' + match + '</mark>';
+            });
+
+            resultElement.append('<pre><code style="background-color: #333333; color: #ffffff;">' + highlightedContent + '</code></pre>');
             resultsContainer.append(resultElement);
         });
     }
-    function performSearch(query) {
-        $.get('/search?q=' + query, function(data) {
-            displayResults(data.results);
+
+    // Função para realizar a pesquisa
+    function performSearch(query, limit) {
+        var searchUrl = '/search?q=' + query;
+        if (limit) {
+            searchUrl += '&limit=' + limit;
+        }
+
+        $.get(searchUrl, function(data) {
+            displayResults(data.results, query);
         });
     }
+
     $(document).ready(function() {
         var queryParam = new URLSearchParams(window.location.search).get('q');
-        
+        var limitParam = new URLSearchParams(window.location.search).get('limit');
         $('#search-input').val(queryParam);
-        performSearch(queryParam);
+        $('#limit-input').val(limitParam);
+
         $('#search-button').on('click', function() {
             var query = $('#search-input').val();
-            performSearch(query);
+            var limit = $('#limit-input').val();
+            performSearch(query, limit);
         });
     });
 </script>

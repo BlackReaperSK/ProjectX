@@ -1,16 +1,14 @@
-/* styles.css */
-
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5;
+    background-color: #000000;
 }
 
 .container {
     max-width: 800px;
     margin: 20px auto;
-    background-color: #fff;
+    background-color: #000000;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -25,12 +23,17 @@ h1 {
 
 #search-input {
     padding: 5px;
+    border: none;
+}
+#limit-input {
+    padding: 5px;
+    border: none;
 }
 
 #search-button {
     padding: 5px 10px;
-    background-color: #007bff;
-    color: #fff;
+    background-color: #460000;
+    color: #020202;
     border: none;
     cursor: pointer;
 }
@@ -41,13 +44,13 @@ h1 {
 
 .result {
     margin-bottom: 20px;
-    border: 1px solid #ddd;
+    border: 1px solid #ffffff;
     padding: 10px;
-    background-color: #fff;
+    background-color: #000000;
 }
 
 pre {
-    background-color: #f8f9fa;
+    background-color: #3a3a3a;
     padding: 10px;
     overflow-x: auto;
 }
