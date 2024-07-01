@@ -13,7 +13,7 @@ func main() {
 	gin.SetMode(gin.ReleaseMode)
 	r := gin.New()
 
-	// ROTAS
+	// ROTAS - TEST
 	r.StaticFS("/portal", http.Dir("internal/static"))
 	routes.SetupSearch(r)
 	routes.SetupExport(r)
